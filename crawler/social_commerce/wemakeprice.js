@@ -3,19 +3,6 @@ const fs = require('fs');
 
 const URL = 'https://front.wemakeprice.com/promotions/main';
 
-const httpsPrefix = 'https:';
-const appendHttps = (url) => {
-  if (url.indexOf(httpsPrefix) === -1) {
-    // 접두사 'https:' 가 없는 URL일 경우
-    return httpsPrefix + url;
-  }
-  return url; // 정상적인 URL일 경우
-};
-
-const getTitle = (raw) => {
-  return raw.substr(raw.indexOf('_') + 1);
-};
-
 (async () => {
   const browser = await puppeteer.launch({
     headless: false,
@@ -62,3 +49,17 @@ const getTitle = (raw) => {
 
   await browser.close();
 })();
+
+const httpsPrefix = 'https:';
+
+function appendHttps(url) {
+  if (url.indexOf(httpsPrefix) === -1) {
+    // 접두사 'https:' 가 없는 URL일 경우
+    return httpsPrefix + url;
+  }
+  return url; // 정상적인 URL일 경우
+}
+
+function getTitle(raw) {
+  return raw.substr(raw.indexOf('_') + 1);
+}
